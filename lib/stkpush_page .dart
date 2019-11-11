@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import 'api_service.dart';
 import 'elements.dart';
 import 'home_page.dart';
 import 'placeholder_widget.dart';
@@ -13,6 +16,10 @@ class StkPushPage extends StatefulWidget{
 
 class _StkPushPageState extends State<StkPushPage>{
  bool _isLoading = false;
+
+String amount1 ;
+String description ='balance';
+String phone1 ;
   final _mobile = TextEditingController();
   final _amount = TextEditingController();final double h =9.0,hh =15.0;
   int _currentIndex = 0;
@@ -106,7 +113,7 @@ final welcome = Padding(
             SizedBox(height: hh),
              buildTextField("Mobile",false,_mobile),
             SizedBox(height: h),
-             buildTextField("Amount",true,_amount),
+             buildTextField("Amount",false,_amount),
             SizedBox(height: hh),
               buildButtonContainerStkpush(context,setState,_isLoading,_mobile,_amount),
             SizedBox(height: hh)
@@ -157,7 +164,8 @@ final welcome = Padding(
 
 
 
-Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_email,_password){
+Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_mobile,_amount){
+
   return Container(
     height: 56.0,
    //MainAxisAlignment:MainAcisalignment.center,
@@ -175,13 +183,9 @@ Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_ema
     )
     ,child: GestureDetector(
       onTap: () {
-        // Navigator.of(context).pushNamed(StkPushPage.tag);
-         Navigator.pushNamed(context, '/stkpush');
-
-        /*
-
-                if(_email.text.isEmpty ||
-                 _password.text.isEmpty){
+print('pushed initiated');
+                if(_mobile.text.isEmpty ||
+                 _amount.text.isEmpty){
                   showDialog(
                     builder: (context) => AlertDialog(
                       title: Text('Failure'),
@@ -194,27 +198,33 @@ Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_ema
                     context: context
                   );
                   return;
-                }
-
+                }/*
+ shortcode ='174379';
+ amount1 =_amount.text;
+ description ='balance';
+ phone1 =_mobile.text;*/
                   final new_user = {
-                  'email': _email.text,
-                  'password':_password.text
+
+                  'shortcode': "174379",
+                  'amount':'1',
+                   'desc': 'test',//'phone': '254722632126'
+                  'phone': '254797382371'
                 };
 
 
-final us =json.encode(new_user);
+//final us =json.encode(new_user);
                 setState(() {
                  _isLoading = true;
                  print('loading $_isLoading');
                 });
-                ApiService.addKeyUser(new_user)
+                ApiService.stkPush(new_user)
                 .then((success){
                    setState(() {
                  _isLoading = false;
                 });
 print('success entry $success');
-final us =json.encode(new_user);
-print('new member $us');
+//final us =json.encode(new_user);
+//print('new member $us');
                   String title, text;
                   if(success){
                     title = "Success";
@@ -228,18 +238,11 @@ print('new member $us');
                     builder: (context) => AlertDialog(
                       title: Text(title),
                       content: Text(text),
-                      actions: <Widget>[ FlatButton(
-                        onPressed: () {
-                          //Navigator.of(context).pushNamed(LoginPage.tag);
-                          Navigator.pop(context);
 
-                          },
-                        child: Text('Ok'),
-                      )],
                     ),
                     context: context
                   );
-                });*/
+                });
 
 
       },//end tap here
@@ -256,4 +259,20 @@ print('new member $us');
     ),
 
   );
+}
+class pushMe {//('174379',_amount.text,'balance',_mobile.text)
+   final String shortcode;
+   final String amount;
+   final String description;
+   final String phone;
+
+   pushMe(this.shortcode, this.amount, this.description, this.phone);
+   factory pushMe.fromMap(Map<String, dynamic> json) {
+      return pushMe(
+         json['shortcode'],
+         json['amount'],
+         json['description'],
+         json['phone'],
+      );
+   }
 }

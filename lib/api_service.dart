@@ -59,4 +59,17 @@ static Future<bool> addKeyUser (Map<String, dynamic> post) async {
   else
   return false;
 }
+
+static Future<bool> stkPush (Map<String, dynamic> data) async {
+  var url ='http://192.168.0.52/mpesa/Lipanampesa.php';
+
+  var body = json.encode(data);
+  var response = await http.post(url,body: body);
+  print("${response.statusCode}");
+  print("${body}");
+  if( response.statusCode == 200)
+  return true;
+  else
+  return false;
+}
 }
