@@ -41,7 +41,9 @@ class ApiService{
    }
 
 static Future<bool> addKeyUser (Map<String, dynamic> post) async {
-  var url ='http://192.168.0.27:3000/register';
+  var url ='http://192.168.43.10/mepin-master/auth';
+  //var url ='http://192.168.43.10/mepin-master/auth';
+
 //https://stackoverflow.com/questions/50278258/http-post-with-json-on-body-flutter-dart
 //https://www.developerlibs.com/2019/01/flutter-get-and-post-http-requests.html
 //https://androidkt.com/http-post-request-in-flutter/
@@ -60,13 +62,63 @@ static Future<bool> addKeyUser (Map<String, dynamic> post) async {
   return false;
 }
 
-static Future<bool> stkPush (Map<String, dynamic> data) async {
-  var url ='http://192.168.0.52/mpesa/Lipanampesa.php';
 
-  var body = json.encode(data);
-  var response = await http.post(url,body: body);
+
+static Future<bool> stkPush (Map<String, dynamic> post) async {
+  var url ='http://192.168.43.10/mepin-master/lnmpcontroller';
+  //encode Map to JSON
+  var body = json.encode(post);
+
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
   print("${response.statusCode}");
-  print("${body}");
+  print("${response.body}");
+  if( response.statusCode == 200)
+  return true;
+  else
+  return false;
+}
+
+
+static Future<bool> userLogin (Map<String, dynamic> post) async {
+  var url ='http://192.168.43.10/mepin-master/login';//192.168.0.27/mepin-master/business
+
+//https://stackoverflow.com/questions/50278258/http-post-with-json-on-body-flutter-dart
+//https://www.developerlibs.com/2019/01/flutter-get-and-post-http-requests.html
+//https://androidkt.com/http-post-request-in-flutter/
+  //encode Map to JSON
+  var body = json.encode(post);
+
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+  print("${response.statusCode}");
+  print("${response.body}");
+  if( response.statusCode == 200)
+  return true;
+  else
+  return false;
+}
+
+
+static Future<bool> addBusiness (Map<String, dynamic> post) async {
+  var url ='http://192.168.43.10/mepin-master/business';//192.168.0.27/mepin-master/business
+
+//https://stackoverflow.com/questions/50278258/http-post-with-json-on-body-flutter-dart
+//https://www.developerlibs.com/2019/01/flutter-get-and-post-http-requests.html
+//https://androidkt.com/http-post-request-in-flutter/
+  //encode Map to JSON
+  var body = json.encode(post);
+
+  var response = await http.post(url,
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+  print("${response.statusCode}");
+  print("${response.body}");
   if( response.statusCode == 200)
   return true;
   else

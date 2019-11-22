@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_pin_interface/add_business.dart';
 import 'package:me_pin_interface/stkpush_page%20.dart';
 import 'forgotPassword_page .dart';
 import 'home_page.dart';
@@ -18,6 +19,7 @@ final routes = <String, WidgetBuilder> {
     '/register':(BuildContext context) => new RegisterPage(),
     '/forgotpassword':(BuildContext context) => new ForgotPasswordPage(),
     '/viewlist':(BuildContext context) => new MainFetchData(),
+    '/business':(BuildContext context) => new BusinessPage()
 
 };
 class MyApp extends StatelessWidget {

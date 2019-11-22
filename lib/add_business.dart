@@ -4,21 +4,19 @@ import 'elements.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 
-class RegisterPage extends StatefulWidget{
+class BusinessPage extends StatefulWidget{
   static String tag = 'tag-';
   @override
-  _RegisterPageState createState() => new _RegisterPageState();
+  _BusinessPageState createState() => new _BusinessPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>{
+class _BusinessPageState extends State<BusinessPage>{
 
   bool _isLoading = false;
-  final _firstname = TextEditingController();
-  final _lastname = TextEditingController();
-  final _nationalid= TextEditingController();
-  final _mobile= TextEditingController();
+  final _shortcode = TextEditingController();
   final _email = TextEditingController();
-  final _password = TextEditingController();final double h =9.0,hh =15.0;
+  final _business_name= TextEditingController();
+  final _business_location= TextEditingController();final double h =9.0,hh =15.0;
   @override
   Widget build(BuildContext context){
     final logo = Hero(
@@ -76,7 +74,7 @@ final loginButton = Padding(
   final welcome = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Register',
+        'Save Data',
         style: TextStyle(fontSize: 28.0, color: Colors.white),
 
       ),
@@ -96,7 +94,7 @@ final forgotLabel = FlatButton(
     return Scaffold(
 
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.orangeAccent,
       body: Center(
         child: ListView(
           shrinkWrap: true,
@@ -104,20 +102,19 @@ final forgotLabel = FlatButton(
           children: <Widget>[
 
             welcome,
+
             SizedBox(height: h),
-              buildTextField("First Name",false,_firstname),
-            SizedBox(height: h),
-             buildTextField("Last Name",false,_lastname),
-            SizedBox(height: h),
-             buildTextField("Mobile",false,_mobile),
+             buildTextField("Shortcode",false,_shortcode),
             SizedBox(height: h),
              buildTextField("Email",false,_email),
             SizedBox(height: h),
-             buildTextField("Password",true,_password),
+             buildTextField("Business Name",true,_business_name),
+             SizedBox(height: h),
+             buildTextField("Business Location",true,_business_location),
             SizedBox(height: hh),
-              buildButtonContainer(context,setState,_isLoading,_firstname,_lastname,_mobile,_email,_password),
+              buildButtonContainerBuz(context,setState,_isLoading, _shortcode,_email,_business_name,_business_location),
             SizedBox(height: hh),
-           // forgotLabel
+            forgotLabel
           ],
         ),
       ),

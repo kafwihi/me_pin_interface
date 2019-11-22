@@ -22,6 +22,7 @@ String description ='balance';
 String phone1 ;
   final _mobile = TextEditingController();
   final _amount = TextEditingController();final double h =9.0,hh =15.0;
+  final _desc = TextEditingController();
   int _currentIndex = 0;
   final List<Widget> _children = [
 
@@ -114,8 +115,10 @@ final welcome = Padding(
              buildTextField("Mobile",false,_mobile),
             SizedBox(height: h),
              buildTextField("Amount",false,_amount),
+               SizedBox(height: h),
+             buildTextField("Description",false,_desc),
             SizedBox(height: hh),
-              buildButtonContainerStkpush(context,setState,_isLoading,_mobile,_amount),
+              buildButtonContainerStkpush(context,setState,_isLoading,_mobile,_amount,_desc),
             SizedBox(height: hh)
 
           ],
@@ -148,9 +151,9 @@ final welcome = Padding(
               icon: IconButton(
               icon: Icon(Icons.home),
               onPressed: (){
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/business');
               },),
-            title: Text('Logout'),
+            title: Text('Business'),
           )
         ],
       ),
@@ -164,7 +167,7 @@ final welcome = Padding(
 
 
 
-Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_mobile,_amount){
+Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_mobile,_amount,_desc){
 
   return Container(
     height: 56.0,
@@ -184,7 +187,7 @@ Widget buildButtonContainerStkpush(BuildContext context,setState,_isLoading,_mob
     ,child: GestureDetector(
       onTap: () {
 print('pushed initiated');
-                if(_mobile.text.isEmpty ||
+                if(_mobile.text.isEmpty ||_desc.text.isEmpty ||
                  _amount.text.isEmpty){
                   showDialog(
                     builder: (context) => AlertDialog(
@@ -205,10 +208,16 @@ print('pushed initiated');
  phone1 =_mobile.text;*/
                   final new_user = {
 
-                  'shortcode': "174379",
+                  /*'shortcode': "174379",
                   'amount':'1',
                    'desc': 'test',//'phone': '254722632126'
-                  'phone': '254797382371'
+                  'phone': '254722632126'*/
+
+                  //'shortcode': int.parse(_shortcode.text),
+                  'shortcode': 174379,
+                  'desc': _desc.text,
+                  'amount': int.parse(_amount.text),
+                  'phone': _mobile.text
                 };
 
 
@@ -231,8 +240,8 @@ print('success entry $success');
                     text = "User Submitted";
                   }
                   else {
-                    title = "Error x";
-                    text = "Error Submitting";
+                    title = "Sorry";
+                    text = "Unable to Submit";
                   }
                    showDialog(
                     builder: (context) => AlertDialog(
@@ -266,12 +275,12 @@ class pushMe {//('174379',_amount.text,'balance',_mobile.text)
    final String description;
    final String phone;
 
-   pushMe(this.shortcode, this.amount, this.description, this.phone);
+   pushMe(this.shortcode,  this.description,this.amount, this.phone);
    factory pushMe.fromMap(Map<String, dynamic> json) {
       return pushMe(
          json['shortcode'],
+         json['desc'],
          json['amount'],
-         json['description'],
          json['phone'],
       );
    }

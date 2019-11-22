@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import 'api_service.dart';
 import 'elements.dart';
 import 'home_page.dart';
 import 'register_page.dart';
@@ -20,7 +23,7 @@ class _LoginPageState extends State<LoginPage>{
     final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.blueAccent,
         radius: 48.0,
         child: Image.asset('assets/facebook.png'),
       ),
@@ -167,9 +170,7 @@ Widget buildButtonContainerLogin(context,setState,_isLoading,_email,_password){
     ,child: GestureDetector(
       onTap: () {
         // Navigator.of(context).pushNamed(StkPushPage.tag);
-         Navigator.pushNamed(context, '/stkpush');
 
-        /*
 
                 if(_email.text.isEmpty ||
                  _password.text.isEmpty){
@@ -198,7 +199,7 @@ final us =json.encode(new_user);
                  _isLoading = true;
                  print('loading $_isLoading');
                 });
-                ApiService.addKeyUser(new_user)
+                ApiService.userLogin(new_user)
                 .then((success){
                    setState(() {
                  _isLoading = false;
@@ -209,7 +210,8 @@ print('new member $us');
                   String title, text;
                   if(success){
                     title = "Success";
-                    text = "User Submitted";
+                    text = "Identification Successful";
+                         Navigator.pushNamed(context, '/stkpush');
                   }
                   else {
                     title = "Error x";
@@ -230,7 +232,7 @@ print('new member $us');
                     ),
                     context: context
                   );
-                });*/
+                });
 
 
       },//end tap here

@@ -39,10 +39,20 @@ String _titleProgress;
       isLoading = true;
     });
     final response =
-        await http.get("http://192.168.0.27:3000/users");
-    if (response.statusCode == 200) {
-      _push = (json.decode(response.body) as List)
-          .map((data) => new PushData.fromJson(data))
+    await http.get("http://192.168.0.27/mepin-master/transactionscontroller?shortcode=174379");
+
+        //await http.get("192.168.1.134/api/product/mpesa_transactions.php");
+        //localhost/mepin-master/transactionscontroller?shortcode=174379
+        //192.168.1.134/api/product/mpesa_transactions.php
+
+        //await http.get("http://192.168.0.27:3000/users");
+
+    if (response.statusCode == 200) {//json.decode(response.body);
+    var dax = json.decode(response.body);
+        var rest = dax["transactions"] as List;
+print(rest);
+      _push = (rest)
+          .map((json) => new PushData.fromJson(json))
           .toList();
       setState(() {
         isLoading = false;
@@ -76,15 +86,15 @@ SingleChildScrollView _dataBody(){
           cells: [
             DataCell(Text(push_it.merchantRequestID.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
             ),
-             DataCell(Text(push_it.amount.toUpperCase(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
+             DataCell(Text(push_it.amount.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
             ),
-           DataCell(Text(push_it.mpesaReceiptNumber.toUpperCase(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),            ),
+           DataCell(Text(push_it.mpesaReceiptNumber.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),            ),
             DataCell(Text(push_it.balance.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),            ),
               DataCell(Text(push_it.transactionDate.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
             ),
-             DataCell(Text(push_it.phoneNumber.toUpperCase(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
+             DataCell(Text(push_it.phoneNumber.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),
             ),
-           DataCell(Text(push_it.resultDesc.toUpperCase(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),            ),
+           DataCell(Text(push_it.resultDesc.toString(),style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14.0, color: Colors.green)),            ),
 
 
           ]
@@ -169,19 +179,24 @@ final String amount;
 final String mpesaReceiptNumber;
 final String balance;
 final String transactionDate;
+//final String shortcode;
 final String phoneNumber;
 //final String resultCode;
 final String resultDesc;
-PushData._({this.merchantRequestID, this.amount,this.mpesaReceiptNumber, this.balance,this.transactionDate, this.phoneNumber, this.resultDesc});
+//PushData._({this.merchantRequestID, this.amount,this.mpesaReceiptNumber, this.transactionDate, this.phoneNumber, this.resultDesc});
+PushData._({this.merchantRequestID, this.amount,this.mpesaReceiptNumber, this.balance,this.transactionDate,/*this.shortcode, */this.phoneNumber,/* this.resultCode,*/this.resultDesc});
+
 factory PushData.fromJson(Map<String, dynamic> json) {
-    return new PushData._(
+    return new PushData._(//  author: json['contents']['quotes'][0]['author'],
+
       merchantRequestID: json['merchantRequestID'],
       amount: json['amount'],
       mpesaReceiptNumber: json['mpesaReceiptNumber'],
       balance: json['balance'],
       transactionDate: json['transactionDate'],
-      phoneNumber: json['PhoneNumber'],
-     // resultCode: json['resultCode'],
+      //shortcode: json['shortcode'],
+      phoneNumber: json['phoneNumber'],
+     // resultCode: json['ResultCode'],
       resultDesc: json['resultDesc'],
     );
   }
